@@ -1,0 +1,75 @@
+body {
+	margin: 0;
+}
+
+*, *:after, *::before {
+	box-sizing: border-box;
+}
+
+[data-search-game] {
+	width: 100%;
+	position: relative;
+
+	.game-background {
+		pointer-events: none;
+		> img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+			position: relative;
+			z-index: 2;
+		}
+	}
+
+	.game-field {
+		border: 1px solid red;
+		width: 80%;
+		left: 50%;
+		top: 0;
+		transform: translateX(-50%);
+		height: 100%;
+		position: absolute;
+		z-index: 4;
+
+		.houses-container {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			z-index: 2;
+			pointer-events: none;
+
+			> img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				display: block;
+			}
+		}
+
+		.ded-container {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			z-index: 1;
+
+			.ded {
+				position: absolute;
+				cursor: pointer;
+				opacity: 0;
+//				transform: translateY(0) !important;
+
+				> img {
+					width: 100%;
+					height: 100%;
+					object-fit: contain;
+					display: block;
+				}
+			}
+		}
+	}
+}
