@@ -6,7 +6,7 @@ window.find_ded_spodarkom = [
 		width: '10%',
 		height: '10%',
 		translateY: '63%',
-		id: 1001 // Добавлено поле id
+		id: 'b1001' // Добавлено поле id
 	},
 	{
 		top: "31%",
@@ -16,7 +16,7 @@ window.find_ded_spodarkom = [
 		width: '15%',
 		height: '15%',
 		translateY: '57%',
-		id: 1002 // Добавлено поле id
+		id: 'b1002' // Добавлено поле id
 	},
 	{
 		top: "39%",
@@ -26,7 +26,7 @@ window.find_ded_spodarkom = [
 		width: '18%',
 		height: '18%',
 		translateY: '65%',
-		id: 1003 // Добавлено поле id
+		id: 'b1003' // Добавлено поле id
 	},
 	{
 		top: "22%",
@@ -35,7 +35,7 @@ window.find_ded_spodarkom = [
 		width: '10%',
 		height: '10%',
 		translateY: '70%',
-		id: 1004 // Добавлено поле id
+		id: 'b1004' // Добавлено поле id
 	},
 	{
 		top: "26%",
@@ -44,7 +44,7 @@ window.find_ded_spodarkom = [
 		width: '13%',
 		height: '13%',
 		translateY: '60%',
-		id: 1005 // Добавлено поле id
+		id: 'b1005' // Добавлено поле id
 	},
 	{
 		top: "27%",
@@ -53,7 +53,7 @@ window.find_ded_spodarkom = [
 		width: '7%',
 		height: '7%',
 		translateY: '63%',
-		id: 1006 // Добавлено поле id
+		id: 'b1006' // Добавлено поле id
 	},
 	{
 		top: "24%",
@@ -62,7 +62,7 @@ window.find_ded_spodarkom = [
 		width: '10%',
 		height: '10%',
 		translateY: '57%',
-		id: 1007 // Добавлено поле id
+		id: 'b1007' // Добавлено поле id
 	},
 	{
 		top: "23%",
@@ -71,7 +71,7 @@ window.find_ded_spodarkom = [
 		width: '7%',
 		height: '7%',
 		translateY: '57%',
-		id: 1008 // Добавлено поле id
+		id: 'b1008' // Добавлено поле id
 	},
 	{
 		top: "48%",
@@ -80,7 +80,7 @@ window.find_ded_spodarkom = [
 		width: '12%',
 		height: '12%',
 		translateY: '57%',
-		id: 1009 // Добавлено поле id
+		id: 'b1009' // Добавлено поле id
 	},
 	{
 		top: "53%",
@@ -90,7 +90,7 @@ window.find_ded_spodarkom = [
 		width: '20%',
 		height: '20%',
 		translateY: '57%',
-		id: 1010 // Добавлено поле id
+		id: 'b1010' // Добавлено поле id
 	},
 	{
 		top: "60%",
@@ -99,7 +99,7 @@ window.find_ded_spodarkom = [
 		width: '20%',
 		height: '20%',
 		translateY: '57%',
-		id: 1011 // Добавлено поле id
+		id: 'b1011' // Добавлено поле id
 	},
 	{
 		top: "59%",
@@ -108,7 +108,7 @@ window.find_ded_spodarkom = [
 		width: '12%',
 		height: '12%',
 		translateY: '57%',
-		id: 1012 // Добавлено поле id
+		id: 'b1012' // Добавлено поле id
 	},
 	{
 		top: "59%",
@@ -118,7 +118,7 @@ window.find_ded_spodarkom = [
 		width: '20%',
 		height: '20%',
 		translateY: '63%',
-		id: 1013 // Добавлено поле id
+		id: 'b1013' // Добавлено поле id
 	},
 	{
 		top: "42%",
@@ -128,7 +128,7 @@ window.find_ded_spodarkom = [
 		width: '12%',
 		height: '12%',
 		translateY: '50%',
-		id: 1014 // Добавлено поле id
+		id: 'b1014' // Добавлено поле id
 	},
 	{
 		top: "33%",
@@ -137,6 +137,6 @@ window.find_ded_spodarkom = [
 		width: '12%',
 		height: '12%',
 		translateY: '50%',
-		id: 1015 // Добавлено поле id
+		id: 'b1015' // Добавлено поле id
 	},
 ];

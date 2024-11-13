@@ -3,7 +3,6 @@ import {CustomEase} from "gsap/CustomEase";
 import './style.scss'
 import {
   getAttributeObject,
-  getRandomElement,
   setAttributeObject
 } from "./usefuls.js";
 
@@ -24,13 +23,43 @@ class FindDedGame {
     this.game_container = null
     this.ded_container = null
     this.game_field = null
-    this.present_count = 10
+    this.scoreField = null
+    this.present_count = 0
     this.generateGameContainer()
     this.generateGameField()
     this.generateHouses()
     this.generateDedContainer()
-    this.generateDed()
+    this.renderDed()
     this.gameAction()
+    this.generateScoreField()
+    this.scores()
+    this.scoreBoxes()
+  }
+
+  generateScoreField() {
+    const element = document.createElement('div')
+    const presents = document.createElement('div')
+    const scoreText = document.createElement('span')
+    element.classList.add('score-field')
+    presents.classList.add('presents')
+    scoreText.classList.add('score-text')
+    scoreText.innerHTML = `Подарки: <span data-score></span>/10`
+    element.append(scoreText)
+    this.game_field.append(element)
+    element.append(presents)
+    this.scoreField = element
+  }
+
+  generateStopButton(interval) {
+    const button = document.createElement('button')
+    button.setAttribute('data-end-game', true)
+    button.textContent = 'Закончить игру и получить скидку'
+    button.addEventListener('click', () => {
+      clearInterval(interval);
+      this.options.onComplete();
+      return;
+    })
+    this.game_container.append(button)
   }
 
   generateGameContainer() {
@@ -68,15 +97,8 @@ class FindDedGame {
     this.ded_container = ded_container
   }
 
-  generateDed() {
-    const createDedInterval = setInterval(() => {
-      if (this.present_count === 10) {
-        clearInterval(createDedInterval)
-        this.options.onComplete()
-        return
-      }
-      const el = getRandomElement(window.find_ded_spodarkom)
-
+  generateDed(el) {
+    if (!el.DOM) {
       const ded = document.createElement('div');
       ded.classList.add('ded')
       ded.id = el.id
@@ -107,44 +129,77 @@ class FindDedGame {
           break
       }
       ded.append(ded_img)
-      window.find_ded_spodarkom.find(item => {
-        if (item.id === ded.id) console.log(item)
-      })
       this.ded_container.append(ded)
-
+      el.DOM = ded
       gsap.to(ded, {
         duration: .3,
         y: 0,
         opacity: 1
       })
-    }, 1000)
+      this.gameAction(ded, el)
+    }
   }
 
-  gameAction() {
-    this.ded_container.addEventListener('click', (e) => {
-      const ded = e.target.closest('div');
-      const ded_data = getAttributeObject(ded, 'data-state')
-      if (ded_data.has_present) {
-        this.present_count++
+  scores() {
+    const el = this.scoreField.querySelector('[data-score]');
+    el.textContent = this.present_count
+  }
+
+  scoreBoxes() {
+    if (this.present_count > 0) {
+      const el = this.scoreField.querySelector('.presents');
+      const box = document.createElement('div')
+      box.classList.add('present-icon')
+      box.innerHTML = `<img src="./img/gift.png">`;
+      el.append(box)
+    }
+  }
+
+  renderDed() {
+    let currentIndex = 0; // Индекс текущего элемента
+
+    const interval = setInterval(() => {
+      if (this.present_count === 10) {
+        clearInterval(interval);
+        this.options.onComplete();
+        return;
       }
-      gsap.to(ded, {
-        y: ded_data.translateY,
-        opacity: 0,
-        duration: .3,
-        ease: hide_moroz,
-        onComplete: () => {
-          ded.remove()
+      // Вызываем this.generateDed() только для одного элемента в секунду
+      this.generateDed(window.find_ded_spodarkom[currentIndex]);
+
+      // Переходим к следующему элементу
+      currentIndex = (currentIndex + 1) % window.find_ded_spodarkom.length;
+
+      // Обнуляем currentIndex, если он достиг конца массива
+      if (currentIndex === 0) {
+        currentIndex = 0; // Начинаем заново
+      }
+
+    }, 1000); // Интервал 1
+    this.generateStopButton(interval)
+  }
+
+  gameAction(ded, el) {
+    if (ded !== undefined && el !== undefined) {
+      ded.addEventListener('click', (e) => {
+        const ded_data = getAttributeObject(ded, 'data-state')
+        if (ded_data.has_present) {
+          this.present_count++
+          this.scores()
+          this.scoreBoxes()
         }
+        gsap.to(ded, {
+          y: ded_data.translateY,
+          opacity: 0,
+          duration: .3,
+          ease: hide_moroz,
+          onComplete: () => {
+            ded.remove()
+            delete el.DOM
+          }
+        })
       })
-    })
-  }
-
-  start() {
-    // Game should start
-  }
-
-  destroy() {
-    // do cleanup if needed
+    }
   }
 }
 

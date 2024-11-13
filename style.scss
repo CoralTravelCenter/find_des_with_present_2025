@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+
 body {
 	margin: 0;
+	font-family: "Manrope", serif;
 }
 
 *, *:after, *::before {
@@ -9,6 +12,19 @@ body {
 [data-search-game] {
 	width: 100%;
 	position: relative;
+
+	[data-end-game] {
+		border-radius: var(--CurrentValue, 12px);
+		background: var(--white, #FFF);
+		padding: min(1.5%, 16px) min(5%, 24px);
+		position: absolute;
+		top: 16px;
+		right: 16px;
+		z-index: 10;
+		border: none;
+		cursor: pointer;
+		font-size: min(1vw, 16px);
+	}
 
 	.game-background {
 		pointer-events: none;
@@ -31,6 +47,39 @@ body {
 		height: 100%;
 		position: absolute;
 		z-index: 4;
+
+		.score-field {
+			display: flex;
+			gap: min(2vw, 24px);
+			width: fit-content;
+			align-items: center;
+			margin: 16px auto 0;
+			border-radius: 41px;
+			background: #FFF;
+			box-shadow: 0px 6px 16px 0px rgba(0, 0, 0, 0.08), 0px 3px 6px -4px rgba(0, 0, 0, 0.12), 0px 9px 28px 8px rgba(0, 0, 0, 0.05);
+			padding: 1.2% 2.4%;
+
+			> span {
+					font-size: min(2vw, 24px);
+			}
+
+			.presents {
+				display: flex;
+				gap: min(1vw, 16px);
+				.present-icon {
+					flex-shrink: 0;
+					height: auto;
+					width: min(2vw, 24px);
+
+					> img {
+						display: block;
+						width: 100%;
+						height: 100%;
+						object-fit: contain;
+					}
+				}
+			}
+		}
 
 		.houses-container {
 			position: absolute;
@@ -56,12 +105,13 @@ body {
 			top: 0;
 			left: 0;
 			z-index: 1;
+			pointer-events: none;
 
 			.ded {
 				position: absolute;
 				cursor: pointer;
 				opacity: 0;
-//				transform: translateY(0) !important;
+				pointer-events: all;
 
 				> img {
 					width: 100%;
