@@ -1,24 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
-
-body {
-	margin: 0;
-	font-family: "Manrope", serif;
-}
-
-*, *:after, *::before {
-	box-sizing: border-box;
-}
-
 [data-search-game] {
 	width: 100%;
 	position: relative;
+
 
 	[data-end-game] {
 		border-radius: var(--CurrentValue, 12px);
 		background: var(--white, #FFF);
 		padding: min(1.5%, 16px) min(5%, 24px);
 		position: absolute;
-		top: 16px;
+		top: 60px;
 		right: 16px;
 		z-index: 10;
 		border: none;
@@ -39,7 +29,7 @@ body {
 	}
 
 	.game-field {
-		border: 1px solid red;
+//		border: 1px solid red;
 		width: 80%;
 		left: 50%;
 		top: 0;
@@ -53,7 +43,7 @@ body {
 			gap: min(2vw, 24px);
 			width: fit-content;
 			align-items: center;
-			margin: 16px auto 0;
+			margin: 60px auto 0;
 			border-radius: 41px;
 			background: #FFF;
 			box-shadow: 0px 6px 16px 0px rgba(0, 0, 0, 0.08), 0px 3px 6px -4px rgba(0, 0, 0, 0.12), 0px 9px 28px 8px rgba(0, 0, 0, 0.05);
@@ -66,6 +56,11 @@ body {
 			.presents {
 				display: flex;
 				gap: min(1vw, 16px);
+
+				&:empty {
+					display:none;
+				}
+
 				.present-icon {
 					flex-shrink: 0;
 					height: auto;
