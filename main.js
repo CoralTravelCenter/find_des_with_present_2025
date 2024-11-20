@@ -203,4 +203,5 @@ class FindDedGame {
   }
 }
 
-new FindDedGame()
+const host = document.querySelector('#serch-present-game')
+new FindDedGame(host)
