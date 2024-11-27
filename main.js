@@ -1,7 +1,7 @@
-import {gsap} from 'gsap'
-import {CustomEase} from 'gsap/CustomEase'
+import { gsap } from 'gsap'
+import { CustomEase } from 'gsap/CustomEase'
 import './game.settings.js'
-import {getAttributeObject, setAttributeObject} from './usefuls.js'
+import { getAttributeObject, setAttributeObject } from './usefuls.js'
 
 gsap.registerPlugin(CustomEase)
 
@@ -9,10 +9,8 @@ class FindDedGame {
 	constructor(hostElement, options = {}) {
 		this.options = {
 			autoStart: true,
-			onReady: () => {
-			},
-			onComplete: () => {
-			},
+			onReady: () => {},
+			onComplete: () => {},
 			...options,
 		}
 
@@ -28,7 +26,7 @@ class FindDedGame {
 			dedDisappear: {
 				duration: 0.3,
 			},
-			intervalBetweenDeds: .8, // Интервал между появлениями Дедов Морозов
+			intervalBetweenDeds: 0.8, // Интервал между появлениями Дедов Морозов
 		}
 
 		this.host = hostElement
@@ -37,6 +35,7 @@ class FindDedGame {
 		this.game_field = null
 		this.scoreField = null
 		this.present_count = 0
+		this.ded_render_interval = null
 		this.init()
 	}
 
@@ -172,7 +171,7 @@ class FindDedGame {
 						isClicked = true
 						clearTimeout(disappearTimeout)
 					},
-					{once: true}
+					{ once: true }
 				)
 			},
 		})
@@ -208,31 +207,41 @@ class FindDedGame {
 
 	renderDed() {
 		let currentIndex = 0
-		const interval = setInterval(() => {
-			if (this.present_count === 10) {
-				clearInterval(interval)
-				this.options.onComplete()
-				document.querySelectorAll('.ded').forEach(el => el.remove())
-				return
-			}
+		this.ded_render_interval = setInterval(() => {
 			this.generateDed(window.find_ded_spodarkom[currentIndex])
 			currentIndex = (currentIndex + 1) % window.find_ded_spodarkom.length
 		}, this.animations.intervalBetweenDeds * 1000)
-		this.generateStopButton(interval)
+		this.generateStopButton(this.ded_render_interval)
 	}
 
 	gameAction(ded, el) {
 		if (ded && el) {
 			ded.addEventListener('click', () => {
 				const ded_data = getAttributeObject(ded, 'data-state')
-				if (ded_data.has_present) {
+				if (ded_data.has_present && this.present_count < 10) {
 					this.present_count++
 					this.scores()
 					this.scoreBoxes()
+
+					if (this.present_count === 10) {
+						this.stopGame()
+					}
 				}
 				this.hideDed(ded, el)
 			})
 		}
+	}
+
+	stopGame() {
+		clearInterval(this.ded_render_interval)
+		const allDeds = this.ded_container.querySelectorAll('.ded')
+		allDeds.forEach(ded => {
+			const el = window.find_ded_spodarkom.find(d => d.id === ded.id)
+			if (el) {
+				this.hideDed(ded, el)
+			}
+		})
+		this.options.onComplete()
 	}
 }
 
