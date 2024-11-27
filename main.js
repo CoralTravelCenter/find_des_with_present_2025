@@ -1,7 +1,7 @@
-import { gsap } from 'gsap'
-import { CustomEase } from 'gsap/CustomEase'
+import {gsap} from 'gsap'
+import {CustomEase} from 'gsap/CustomEase'
 import './game.settings.js'
-import { getAttributeObject, setAttributeObject } from './usefuls.js'
+import {getAttributeObject, setAttributeObject} from './usefuls.js'
 
 gsap.registerPlugin(CustomEase)
 
@@ -9,8 +9,10 @@ class FindDedGame {
 	constructor(hostElement, options = {}) {
 		this.options = {
 			autoStart: true,
-			onReady: () => {},
-			onComplete: () => {},
+			onReady: () => {
+			},
+			onComplete: () => {
+			},
 			...options,
 		}
 
@@ -21,12 +23,12 @@ class FindDedGame {
 				duration: 0.3,
 			},
 			dedStay: {
-				duration: 2, // Время, в течение которого Дед Мороз остается видимым
+				duration: 1, // Время, в течение которого Дед Мороз остается видимым
 			},
 			dedDisappear: {
 				duration: 0.3,
 			},
-			intervalBetweenDeds: 1, // Интервал между появлениями Дедов Морозов
+			intervalBetweenDeds: .8, // Интервал между появлениями Дедов Морозов
 		}
 
 		this.host = hostElement
@@ -35,7 +37,6 @@ class FindDedGame {
 		this.game_field = null
 		this.scoreField = null
 		this.present_count = 0
-		this.clickDebounceTime = 300
 		this.init()
 	}
 
@@ -171,7 +172,7 @@ class FindDedGame {
 						isClicked = true
 						clearTimeout(disappearTimeout)
 					},
-					{ once: true }
+					{once: true}
 				)
 			},
 		})
@@ -200,7 +201,7 @@ class FindDedGame {
 			const el = this.scoreField.querySelector('.presents')
 			const box = document.createElement('div')
 			box.classList.add('present-icon')
-			box.innerHTML = `<img src="./img/gift.png">`
+			box.innerHTML = `<img src="https://b2ccdn.coral.ru/content/landing-pages/ny-2025-gaming-host/libs/games/phase0/gift.png">`
 			el.append(box)
 		}
 	}
@@ -211,6 +212,7 @@ class FindDedGame {
 			if (this.present_count === 10) {
 				clearInterval(interval)
 				this.options.onComplete()
+				document.querySelectorAll('.ded').forEach(el => el.remove())
 				return
 			}
 			this.generateDed(window.find_ded_spodarkom[currentIndex])
@@ -235,4 +237,8 @@ class FindDedGame {
 }
 
 const host = document.querySelector('#serch-present-game')
-new FindDedGame(host)
+new FindDedGame(host, {
+	onComplete: () => {
+		console.log('GAME OVER')
+	},
+})
