@@ -21,12 +21,12 @@ class FindDedGame {
 				duration: 0.3,
 			},
 			dedStay: {
-				duration: 2, // Время, в течение которого Дед Мороз остается видимым
+				duration: 1, // Время, в течение которого Дед Мороз остается видимым
 			},
 			dedDisappear: {
 				duration: 0.3,
 			},
-			intervalBetweenDeds: 1, // Интервал между появлениями Дедов Морозов
+			intervalBetweenDeds: 0.8, // Интервал между появлениями Дедов Морозов
 		}
 
 		this.host = hostElement
@@ -35,7 +35,7 @@ class FindDedGame {
 		this.game_field = null
 		this.scoreField = null
 		this.present_count = 0
-		this.clickDebounceTime = 300
+		this.ded_render_interval = null
 		this.init()
 	}
 
@@ -200,39 +200,54 @@ class FindDedGame {
 			const el = this.scoreField.querySelector('.presents')
 			const box = document.createElement('div')
 			box.classList.add('present-icon')
-			box.innerHTML = `<img src="./img/gift.png">`
+			box.innerHTML = `<img src="https://b2ccdn.coral.ru/content/landing-pages/ny-2025-gaming-host/libs/games/phase0/gift.png">`
 			el.append(box)
 		}
 	}
 
 	renderDed() {
 		let currentIndex = 0
-		const interval = setInterval(() => {
-			if (this.present_count === 10) {
-				clearInterval(interval)
-				this.options.onComplete()
-				return
-			}
+		this.ded_render_interval = setInterval(() => {
 			this.generateDed(window.find_ded_spodarkom[currentIndex])
 			currentIndex = (currentIndex + 1) % window.find_ded_spodarkom.length
 		}, this.animations.intervalBetweenDeds * 1000)
-		this.generateStopButton(interval)
+		this.generateStopButton(this.ded_render_interval)
 	}
 
 	gameAction(ded, el) {
 		if (ded && el) {
 			ded.addEventListener('click', () => {
 				const ded_data = getAttributeObject(ded, 'data-state')
-				if (ded_data.has_present) {
+				if (ded_data.has_present && this.present_count < 10) {
 					this.present_count++
 					this.scores()
 					this.scoreBoxes()
+
+					if (this.present_count === 10) {
+						this.stopGame()
+					}
 				}
 				this.hideDed(ded, el)
 			})
 		}
 	}
+
+	stopGame() {
+		clearInterval(this.ded_render_interval)
+		const allDeds = this.ded_container.querySelectorAll('.ded')
+		allDeds.forEach(ded => {
+			const el = window.find_ded_spodarkom.find(d => d.id === ded.id)
+			if (el) {
+				this.hideDed(ded, el)
+			}
+		})
+		this.options.onComplete()
+	}
 }
 
 const host = document.querySelector('#serch-present-game')
-new FindDedGame(host)
+new FindDedGame(host, {
+	onComplete: () => {
+		console.log('GAME OVER')
+	},
+})
