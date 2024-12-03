@@ -8,12 +8,19 @@
 		background: var(--white, #fff);
 		padding: min(1.5%, 16px) min(5%, 24px);
 		position: absolute;
-	  top: 9.5%;
-		right: 16px;
+		//top: 9.5%;
+		top: calc(60px + 2em);
+		//right: 16px;
+		right: 2em;
 		z-index: 10;
 		border: none;
 		cursor: pointer;
-		font-size: min(1vw, 16px);
+		//font-size: min(1vw, 16px);
+		@media screen and (max-width: 1000px) {
+			font-size: 1.7em!important;
+			top: calc(40px + 1em);
+			right: 1em;
+		}
 	}
 
 	.game-background {
@@ -42,16 +49,20 @@
 			gap: min(2vw, 24px);
 			width: fit-content;
 			align-items: center;
-			margin: 5% auto 0;
+			//margin: 5% auto 0;
+			margin: calc(60px + 2em) auto 0;
 			border-radius: 41px;
 			background: #fff;
 			box-shadow: 0px 6px 16px 0px rgba(0, 0, 0, 0.08),
 				0px 3px 6px -4px rgba(0, 0, 0, 0.12),
 				0px 9px 28px 8px rgba(0, 0, 0, 0.05);
 			padding: 1.2% 2.4%;
-
+			@media screen and (max-width: 1000px) {
+				font-size: 2em;
+				margin: calc(40px + 1em) auto 0;
+			}
 			> span {
-				font-size: min(2vw, 24px);
+				//font-size: min(2vw, 24px);
 			}
 
 			.presents {

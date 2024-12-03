@@ -245,9 +245,7 @@ class FindDedGame {
 	}
 }
 
-const host = document.querySelector('#serch-present-game')
-new FindDedGame(host, {
-	onComplete: () => {
-		console.log('GAME OVER')
-	},
-})
+// const host = document.querySelector('#serch-present-game')
+try {
+	new FindDedGame();
+} catch (ex){}
